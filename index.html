@@ -90,13 +90,60 @@
   .lake { fill: #bfdbfe; stroke: none; pointer-events: none; }
 
   .territory-picker { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 20px; border-bottom: 1px solid #f1f5f9; }
-  .territory-btn { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #334155; transition: all 0.15s; }
+  .territory-btn { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border: 1.5px solid #e2e8f0; border-radius: 8px; background: white; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #334155; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
   .territory-btn:hover { background: #f8fafc; border-color: #cbd5e1; }
   .territory-btn.active { border-color: #1e3a5f; background: #1e3a5f; color: white; box-shadow: 0 2px 6px rgba(30,58,95,0.25); }
   .territory-btn .swatch { width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.6); }
   .territory-btn.active .swatch { border-color: rgba(255,255,255,0.85); }
 
   .unassigned-list { font-size: 0.85rem; color: #64748b; }
+
+  /* ===== Tablet & mobile ===== */
+  @media (max-width: 900px) {
+    .main { flex-direction: column; padding: 16px; max-width: 100%; }
+    .sidebar { width: 100%; margin-left: 0; margin-top: 16px; }
+    .header { padding: 18px 20px; }
+    .header h1 { font-size: 1.3rem; }
+    .header p { font-size: 0.78rem; }
+    .controls { padding: 14px 16px; gap: 10px; }
+    .state-label { font-size: 18px; }
+    .state-label-amount { font-size: 20px; }
+  }
+
+  /* ===== Phone ===== */
+  @media (max-width: 600px) {
+    body { font-size: 14px; }
+    .header { padding: 14px 16px; }
+    .header h1 { font-size: 1.1rem; line-height: 1.25; }
+    .header p { font-size: 0.72rem; line-height: 1.3; }
+
+    .controls { padding: 12px; gap: 8px; }
+    .control-group { flex: 1 1 calc(50% - 4px); min-width: 0; }
+    .control-group label { font-size: 0.68rem; }
+    select { width: 100%; padding: 10px 30px 10px 12px; font-size: 16px; /* prevents iOS zoom on focus */ }
+    .btn-clear { width: 100%; padding: 10px 12px; font-size: 0.85rem; min-height: 44px; }
+
+    .main { padding: 12px; gap: 12px; }
+    .sidebar { gap: 12px; margin-top: 12px; }
+
+    .card-header { padding: 14px 16px 10px; }
+    .card-body { padding: 14px 16px 16px; }
+    .total-amount { font-size: 1.6rem; }
+
+    .territory-picker { padding: 10px 14px; gap: 6px; }
+    .territory-btn { padding: 10px 12px; font-size: 0.85rem; min-height: 44px; flex: 1 1 auto; justify-content: center; }
+
+    .state-label { font-size: 22px; }
+    .state-label-amount { font-size: 22px; }
+    .click-hint { font-size: 0.72rem; padding: 0 8px; line-height: 1.4; }
+  }
+
+  /* Tap feedback on touch devices */
+  @media (hover: none) {
+    .state-group:active .state-path { fill: #c5d0dd; }
+    .territory-btn:active { background: #f1f5f9; }
+    .btn-clear:active { background: #f1f5f9; }
+  }
 </style>
 </head>
 <body>
