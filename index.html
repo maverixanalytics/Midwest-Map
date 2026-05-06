@@ -162,6 +162,8 @@
       <option value="allProducts">All Products</option>
       <option value="actual2025">2025 Actual Revenue</option>
       <option value="actual2026q1">2026 Q1 Actual Revenue</option>
+      <option value="commission2025">2025 Commission</option>
+      <option value="commission2026q1">2026 Q1 Commission</option>
     </select>
   </div>
   <div class="control-group">
@@ -359,11 +361,31 @@ const data = {
     hcps:            { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
     procedureVolume: { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
     annualOpportunity:{ IL: 352749, IN: 97980, IA: 13344, MI: 367582, MN: 50613, WI: 193284 }
+  },
+  // 2025 commission — only $ is meaningful here (other metrics N/A)
+  commission2025: {
+    sitesOfCare:     { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
+    hcps:            { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
+    procedureVolume: { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
+    annualOpportunity:{ IL: 110050, IN: 14650, IA: 3950, MI: 112400, MN: 31200, WI: 69450 }
+  },
+  // 2026 Q1 (YTD) commission — only $ is meaningful here (other metrics N/A)
+  commission2026q1: {
+    sitesOfCare:     { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
+    hcps:            { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
+    procedureVolume: { IL: 0, IN: 0, IA: 0, MI: 0, MN: 0, WI: 0 },
+    annualOpportunity:{ IL: 63300, IN: 18050, IA: 2450, MI: 67100, MN: 9550, WI: 36450 }
   }
 };
 
-// Products that represent actual revenue (vs. opportunity / counts)
-const actualRevenueProducts = { actual2025: true, actual2026q1: true };
+// Products whose only meaningful metric is the dollar amount.
+// Maps product → label to use in place of "Annual Opportunity".
+const actualProductLabels = {
+  actual2025: 'Actual Revenue',
+  actual2026q1: 'Actual Revenue',
+  commission2025: 'Actual Commission',
+  commission2026q1: 'Actual Commission'
+};
 
 const metricLabels = {
   sitesOfCare: 'Sites of Care',
@@ -395,8 +417,8 @@ function getActiveData() {
 // Display label for the current metric — "Annual Opportunity" becomes
 // "Actual Revenue" when an actuals product is selected.
 function getMetricLabel(metric) {
-  if (metric === 'annualOpportunity' && actualRevenueProducts[currentProduct]) {
-    return 'Actual Revenue';
+  if (metric === 'annualOpportunity' && actualProductLabels[currentProduct]) {
+    return actualProductLabels[currentProduct];
   }
   return metricLabels[metric];
 }
@@ -679,7 +701,7 @@ document.getElementById('productFilter').addEventListener('change', function() {
   currentProduct = this.value;
   // Actuals only have revenue populated — force-switch the metric so users
   // don't see all-zeros if they had HCPs/Sites/Procedures selected.
-  if (actualRevenueProducts[currentProduct] && currentMetric !== 'annualOpportunity') {
+  if (actualProductLabels[currentProduct] && currentMetric !== 'annualOpportunity') {
     currentMetric = 'annualOpportunity';
     document.getElementById('metricFilter').value = 'annualOpportunity';
   }
